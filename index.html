@@ -336,7 +336,7 @@ function showResults(){
   let emoji,title,sub;
   if(pct===100){emoji='🏆';title='Perfecte! Ets una crack!';sub='Has encertat totes les preguntes!';}
   else if(pct>=80){emoji='🌟';title='Molt bé!';sub='Quasi perfecte, segueix practicant!';}
-  else if(pct>=60){emoji='💪';title='Bon esforç!';sub='Vas per bon camí. Repassa les que has fallat!';}
+  else if(pct>=60){emoji='💪';title='Bon esforc!';sub='Vas per bon camí. Repassa les que has fallat!';}
   else if(pct>=40){emoji='📚';title='Cal estudiar més!';sub='No et preocupis, torna-ho a intentar!';}
   else{emoji='😅';title='Hem de repassar!';sub='Llegeix el tema i torna-ho a provar.';}
   document.getElementById('result-emoji').textContent=emoji;
@@ -352,7 +352,10 @@ function showResults(){
 }
 
 function shuffle(arr){
-  for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
   return arr;
 }
 </script>
