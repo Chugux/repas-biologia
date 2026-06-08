@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Repas Biologia</title>
+<style>
+body { font-family: Arial, sans-serif; background: #f0f4ff; margin: 0; padding: 0; }
+header { background: #6c63ff; color: white; padding: 24px; text-align: center; }
+header h1 { font-size: 1.8rem; margin: 0; }
+header p { margin: 6px 0 0; opacity: .85; }
+#home { max-width: 560px; margin: 32px auto; padding: 0 16px; }
+.quiz-card { background: white; border-radius: 14px; padding: 20px 24px; display: flex; align-items: center; gap: 16px; cursor: pointer; margin-bottom: 14px; box-shadow: 0 2px 12px rgba(0,0,0,.08); border: 2px solid transparent; }
+.quiz-card:hover { border-color: #6c63ff; }
+.quiz-icon { font-size: 2rem; }
+.quiz-info h2 { font-size: 1rem; margin: 0; }
+.quiz-info p { font-size: .85rem; color: #888; margin: 3px 0 0; }
+.arrow { margin-left: auto; color: #6c63ff; font-size: 1.3rem; }
+.locked { opacity: .4; cursor: default; }
+.locked:hover { border-color: transparent; }
+
+#quiz { display: none; max-width: 640px; margin: 0 auto; padding: 24px 16px 60px; }
+.top-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.back { background: white; border: none; border-radius: 50%; width: 38px; height: 38px; cursor: pointer; font-size: 1.1rem; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+.quiz-name { font-weight: 700; font-size: 1.1rem; }
+.prog-info { display: flex; justify-content: space-between; font-size: .8rem; color: #888; margin-bottom: 5px; }
+.prog-bar { height: 7px; background: #e0e0f0; border-radius: 99px; overflow: hidden; margin-bottom: 20px; }
+.prog-fill { height: 100%; background: #6c63ff; border-radius: 99px; transition: width .3s; }
+.qcard { background: white; border-radius: 14px; padding: 22px; margin-bottom: 14px; box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+.qlabel { font-size: .72rem; font-weight: 700; color: #6c63ff; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.qtext { font-size: 1rem; font-weight: 700; line-height: 1.5; }
+.options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+.opt { background: #f0f4ff; border: 2px solid #e0e0f0; border-radius: 10px; padding: 12px 14px; cursor: pointer; font-family: Arial,sans-serif; font-size: .93rem; font-weight: 600; display: flex; gap: 10px; text-align: left; transition: border-color .15s; }
+.opt:hover:not(:disabled) { border-color: #6c63ff; background: #ede9ff; }
+.opt.ok { background: #d4f7f0; border-color: #2ec4b6; color: #1a6e67; }
+.opt.ko { background: #ffe0e8; border-color: #ef476f; color: #8b0029; }
+.opt:disabled { cursor: default; }
+.letter { font-weight: 900; color: #6c63ff; min-width: 16px; }
+.opt.ok .letter { color: #2ec4b6; }
+.opt.ko .letter { color: #ef476f; }
+.feedback { border-radius: 10px; padding: 12px 14px; font-size: .9rem; font-weight: 700; display: none; margin-bottom: 12px; line-height: 1.45; }
+.feedback.show { display: block; }
+.feedback.ok { background: #d4f7f0; color: #1a6e67; border-left: 4px solid #2ec4b6; }
+.feedback.ko { background: #ffe0e8; color: #8b0029; border-left: 4px solid #ef476f; }
+.nextbtn { display: none; width: 100%; padding: 13px; background: #6c63ff; color: white; border: none; border-radius: 10px; font-family: Arial,sans-serif; font-size: .97rem; font-weight: 700; cursor: pointer; }
+.nextbtn.show { display: block; }
+
+#results { display: none; max-width: 520px; margin: 0 auto; padding: 40px 16px; text-align: center; }
+.remoji { font-size: 4.5rem; margin-bottom: 12px; }
+.rtitle { font-size: 1.6rem; font-weight: 900; margin-bottom: 6px; }
+.rsub { color: #888; margin-bottom: 22px; }
+.circle { width: 120px; height: 120px; border-radius: 50%; background: #6c63ff; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 24px; }
+.cnum { font-size: 2.4rem; font-weight: 900; line-height: 1; }
+.cden { font-size: .95rem; opacity: .85; }
+.rbtn { width: 100%; padding: 13px; border-radius: 10px; font-family: Arial,sans-serif; font-size: .97rem; font-weight: 700; cursor: pointer; margin-bottom: 10px; }
+.rbtn.pri { background: #6c63ff; color: white; border: none; }
+.rbtn.sec { background: white; color: #6c63ff; border: 2px solid #6c63ff; }
+.wrongs { background: white; border-radius: 14px; padding: 18px; text-align: left; margin-bottom: 20px; box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+.wrongs h3 { font-size: .9rem; font-weight: 700; color: #6c63ff; margin-bottom: 12px; }
+.wi { margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #f0f0f0; }
+.wi:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.wi .wq { font-weight: 700; font-size: .85rem; margin-bottom: 3px; }
+.wi .wa { font-size: .82rem; background: #d4f7f0; color: #1a6e67; padding: 4px 9px; border-radius: 7px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>&#x1F9EC; Repas 3r Trimestre</h1>
+  <p>Biologia i Geologia &middot; 1r ESO</p>
+</header>
+
+<div id="home">
+  <div class="quiz-card" onclick="startQuiz(0)">
+    <div class="quiz-icon">&#x1F9A0;</div>
+    <div class="quiz-info"><h2>Questionari 1 &middot; Els virus</h2><p>33 preguntes &middot; Unitat 5</p></div>
+    <div class="arrow">&#8594;</div>
+  </div>
+  <div class="quiz-card locked"><div class="quiz-icon">&#x1F52C;</div><div class="quiz-info"><h2>Questionari 2</h2><p>Proximament...</p></div><div class="arrow">&#x1F512;</div></div>
+  <div class="quiz-card locked"><div class="quiz-icon">&#x1F9EB;</div><div class="quiz-info"><h2>Questionari 3</h2><p>Proximament...</p></div><div class="arrow">&#x1F512;</div></div>
+  <div class="quiz-card locked"><div class="quiz-icon">&#x1F33F;</div><div class="quiz-info"><h2>Questionari 4</h2><p>Proximament...</p></div><div class="arrow">&#x1F512;</div></div>
+  <div class="quiz-card locked"><div class="quiz-icon">&#x1F9EA;</div><div class="quiz-info"><h2>Questionari 5</h2><p>Proximament...</p></div><div class="arrow">&#x1F512;</div></div>
+</div>
+
+<div id="quiz">
+  <div class="top-bar">
+    <button class="back" onclick="goHome()">&#8592;</button>
+    <span class="quiz-name" id="qname"></span>
+  </div>
+  <div class="prog-info"><span id="ptext"></span><span id="ppct"></span></div>
+  <div class="prog-bar"><div class="prog-fill" id="pfill" style="width:0%"></div></div>
+  <div id="qarea"></div>
+</div>
+
+<div id="results">
+  <div class="remoji" id="remoji"></div>
+  <div class="rtitle" id="rtitle"></div>
+  <div class="rsub"   id="rsub"></div>
+  <div class="circle"><span class="cnum" id="cnum"></span><span class="cden" id="cden"></span></div>
+  <div id="wlist"></div>
+  <button class="rbtn pri" id="retrybtn">&#x1F504; Torna-ho a intentar</button>
+  <button class="rbtn sec" onclick="goHome()">&#x1F3E0; Torna a l'inici</button>
+</div>
+
+<script>
+var DATA = [
+  {
+    title: "Els virus",
+    qs: [
+      {q:"Que son els virus?", a:"Son essers acelulars (no tenen cellules).", w:["Son essers unicellulars molt petits.","Son bacteris sense membrana nuclear."]},
+      {q:"Per que es consideren parasits estrictes?", a:"Perque necessiten infectar una cellula per fer copies de si mateixos.", w:["Perque nomes viuen en ambients aquatics.","Perque s'alimenten de nutrients del sol."]},
+      {q:"Els virus son essers vius?", a:"No es consideren essers vius complets, perque no tenen cellules ni poden fer les funcions vitals per si mateixos.", w:["Si, perque es poden reproduir.","Si, perque tenen material genetic propi."]},
+      {q:"Per que no s'inclouen en cap regne?", a:"Perque no compleixen les caracteristiques dels essers vius: estar format per cellules i fer les 3 funcions vitals (nutriciorelacio i reproduccio).", w:["Perque son massa petits per classificar-los.","Perque pertanyen al regne dels protoctists."]},
+      {q:"Per que no es poden observar amb un microscopi optic?", a:"Perque son molt petits i cal un microscopi electronic, que proporciona mes augments.", w:["Perque son transparents i no reflecteixen la llum.","Perque es mouen massa rapid per poder-los veure."]},
+      {q:"De que esta format el genoma d'un virus?", a:"De material genetic (acids nucleics).", w:["De lipids i proteines estructurals.","De glucosa i aminoacids."]},
+      {q:"Quines parts tenen tots els virus?", a:"Tots els virus presenten genoma (material genetic) i capside (coberta proteica).", w:["Membrana cellular, citoplasma i nucli.","Embolcall lipidic, ribosomes i vacuoles."]},
+      {q:"Quina funcio te el genoma del virus?", a:"Conte tota la informacio necessaria per produir nous virus.", w:["Protegeix el virus de les temperatures extremes.","Ajuda el virus a moure's dins l'organisme."]},
+      {q:"Quina funcio te la capside?", a:"Es una coberta proteica que protegeix el material genetic del virus.", w:["Permet al virus obtenir energia per reproduir-se.","Conte els enzims necessaris per infectar la cellula."]},
+      {q:"Quina funcio te l'embolcall? La presenten tots els virus?", a:"L'embolcall ajuda el virus a introduir-se dins la cellula. No tots els virus el tenen, nomes alguns.", w:["L'embolcall emmagatzema energia. Tots els virus el tenen.","L'embolcall protegeix el genoma. Nomes el tenen els fags."]},
+      {q:"Quin tipus de virus parasiten cellules animals?", a:"Els virus animals.", w:["Els bacteriofags.","Els virus vegetals."]},
+      {q:"Quin tipus de virus infecten bacteris?", a:"Els virus bacterians o fags.", w:["Els virus animals.","Els retrovirus."]},
+      {q:"Quines semblances hi ha entre virus animals i virus bacterians?", a:"Tots dos presenten capside i genoma, i tots dos son parasits estrictes.", w:["Tots dos presenten embolcall lipidic i cua.","Tots dos infecten cellules animals i vegetals."]},
+      {q:"Quines diferencies hi ha entre virus animals i virus bacterians?", a:"Els virus animals parasiten cellules d'animals i presenten embolcall, mentre que els bacterians parasiten bacteris i presenten coll, cua, fibres i placa basal.", w:["Els virus animals tenen cua i els bacterians no en tenen.","Els virus bacterians son mes grans i tenen embolcall."]},
+      {q:"Quin es el primer pas quan un virus infecta una cellula?", a:"El virus reconeix la cellula i hi introdueix el seu material genetic.", w:["El virus destrueix la membrana de la cellula immediatament.","El virus espera que la cellula es divideixi per entrar-hi."]},
+      {q:"Que passa amb el material genetic del virus dins la cellula?", a:"Utilitza la maquinaria de la cellula per fabricar nous virus.", w:["Es destrueix per les defenses de la cellula.","S'integra al nucli sense causar cap canvi."]},
+      {q:"Que passa al final del proces d'infeccio?", a:"La cellula es trenca (lisi) i allibera nous virus.", w:["La cellula es recupera i elimina el virus.","El virus surt de la cellula sense destruir-la."]},
+      {q:"Quin es l'ordre correcte del cicle d'un virus?", a:"1.El virus reconeix el bacteri. 2.El genoma s'introdueix dins la cellula. 3.El genoma utilitza la maquinaria cellular. 4.Acumulacio de particules viriques. 5.La cellula es trenca i surten els nous virus.", w:["1.Lisi cellular. 2.Introduccio del genoma. 3.Reconeixement. 4.Fabricacio. 5.Acumulacio.","1.Acumulacio. 2.Reconeixement. 3.Lisi. 4.Introduccio del genoma. 5.Fabricacio."]},
+      {q:"Com s'anomena el proces en que es trenca la cellula infectada per alliberar nous virus?", a:"Cicle litic.", w:["Cicle lisogenic.","Cicle metabolic."]},
+      {q:"Que es el cicle lisogenic?", a:"Te lloc quan el virus s'integra al material genetic de la cellula i es mante un temps sense destruir-la.", w:["Es el proces pel qual el virus destrueix la cellula immediatament.","Es quan el virus es reprodueix fora de la cellula."]},
+      {q:"Que poden provocar els virus?", a:"Malalties en diferents essers vius.", w:["Nomes reaccions allergiques en humans.","Unicament infeccions en animals vertebrats."]},
+      {q:"Els virus nomes afecten els humans?", a:"No, tambe afecten animals, plantes i bacteris.", w:["Si, els virus estan especialitzats en cellules humanes.","No, pero nomes afecten animals i humans."]},
+      {q:"Quin problema economic poden causar els virus?", a:"Grans perdues economiques, per exemple en agricultura o ramaderia.", w:["Augment del cost dels medicaments antibiotics.","Problemes en la industria quimica i farmaceutica."]},
+      {q:"Com es combaten les infeccions viriques?", a:"Amb antivirals.", w:["Amb antibiotics.","Amb antiinflamatoris i analgesics."]},
+      {q:"Es poden utilitzar antibiotics per curar infeccions viriques?", a:"No, perque els antibiotics nomes funcionen contra bacteris.", w:["Si, els antibiotics eliminen qualsevol tipus d'infeccio.","Si, pero nomes per als virus mes senzills."]},
+      {q:"Quin virus causa la grip?", a:"El virus de la grip.", w:["El VIH.","El virus del refredat comu (rinovirus)."]},
+      {q:"Quin virus causa la sida?", a:"El VIH (virus de la immunodeficiencia humana).", w:["El virus de l'Ebola.","El virus de l'hepatitis B."]},
+      {q:"Quin virus afecta el sistema immunologic i provoca immunodeficiencia?", a:"El VIH.", w:["El virus de la grip.","El virus de la COVID-19."]},
+      {q:"Quin virus pot provocar febre, perdua del gust i dificultat per respirar?", a:"El virus de la COVID-19.", w:["El virus de la grip estacional.","El VIH."]},
+      {q:"Quin virus pot provocar una fallada general dels organs del cos?", a:"L'Ebola.", w:["El virus de la grip.","El VIH."]},
+      {q:"Per que els virus necessiten una cellula per reproduir-se?", a:"Perque no tenen la maquinaria propia per fer-ho.", w:["Perque necessiten nutrients que nomes hi ha dins les cellules.","Perque la temperatura dins la cellula es la ideal per als virus."]},
+      {q:"Quina diferencia hi ha entre virus i bacteris?", a:"Els virus no tenen cellules, mentre que els bacteris si que son essers vius cellulars.", w:["Els bacteris no es poden reproduir sols, els virus si.","Els virus tenen nucli definit, els bacteris no."]},
+      {q:"Per que els antibiotics no funcionen contra els virus?", a:"Perque els virus no son bacteris i tenen un funcionament diferent.", w:["Perque els virus destrueixen els antibiotics rapidament.","Perque els antibiotics nomes funcionen en malalties croniques."]},
+      {q:"Per que els virus poden ser dificils de combatre?", a:"Perque es reprodueixen dins les cellules i poden mutar.", w:["Perque viuen fora de les cellules i son dificils de localitzar.","Perque produeixen toxines que destrueixen els medicaments."]}
+    ]
+  }
+];
+
+var cquiz=null, qs=[], qi=0, score=0, wrong=[], sopts=[], ans=false;
+
+function goHome(){
+  show('home'); hide('quiz'); hide('results');
+}
+function show(id){ document.getElementById(id).style.display=''; }
+function hide(id){ document.getElementById(id).style.display='none'; }
+
+function startQuiz(i){
+  cquiz=DATA[i];
+  qs=shuffle(cquiz.qs.slice());
+  qi=0; score=0; wrong=[];
+  hide('home'); hide('results'); show('quiz');
+  document.getElementById('qname').textContent=cquiz.title;
+  loadQ();
+}
+
+function loadQ(){
+  ans=false;
+  var total=qs.length;
+  var pct=Math.round(qi/total*100);
+  document.getElementById('ptext').textContent='Pregunta '+(qi+1)+' de '+total;
+  document.getElementById('ppct').textContent=pct+'%';
+  document.getElementById('pfill').style.width=pct+'%';
+
+  var item=qs[qi];
+  var cp=Math.floor(Math.random()*3);
+  sopts=[]; var wi=0;
+  for(var i=0;i<3;i++){
+    if(i===cp) sopts.push({t:item.a,ok:true});
+    else sopts.push({t:item.w[wi++],ok:false});
+  }
+
+  var ls=['A','B','C'];
+  var html='<div class="qcard"><div class="qlabel">Pregunta '+(qi+1)+'</div><div class="qtext">'+item.q+'</div></div>';
+  html+='<div class="options">';
+  for(var i=0;i<3;i++){
+    html+='<button class="opt" id="o'+i+'" onclick="pick('+i+')">';
+    html+='<span class="letter">'+ls[i]+'</span><span>'+sopts[i].t+'</span></button>';
+  }
+  html+='</div>';
+  html+='<div class="feedback" id="fb"></div>';
+  html+='<button class="nextbtn" id="nb" onclick="nextQ()">'+(qi+1<qs.length?'Seguent pregunta &rarr;':'Veure resultats &#x1F3C6;')+'</button>';
+  document.getElementById('qarea').innerHTML=html;
+}
+
+function pick(i){
+  if(ans) return;
+  ans=true;
+  var fb=document.getElementById('fb');
+  var nb=document.getElementById('nb');
+  for(var j=0;j<3;j++){
+    var b=document.getElementById('o'+j);
+    b.disabled=true;
+    if(sopts[j].ok) b.classList.add('ok');
+    else if(j===i) b.classList.add('ko');
+  }
+  if(sopts[i].ok){
+    score++;
+    var praises=['Correcte! Molt be!','Exacte! Ets una crack!','Perfecte! Segueix aixi!'];
+    fb.className='feedback ok show';
+    fb.textContent=praises[Math.floor(Math.random()*3)];
+  } else {
+    wrong.push({q:qs[qi].q,a:qs[qi].a});
+    fb.className='feedback ko show';
+    fb.textContent='Incorrecte. La resposta correcta era: '+qs[qi].a;
+  }
+  nb.classList.add('show');
+}
+
+function nextQ(){
+  qi++;
+  if(qi>=qs.length) showResults();
+  else loadQ();
+}
+
+function showResults(){
+  hide('quiz'); show('results');
+  var total=qs.length, pct=Math.round(score/total*100);
+  var e,t,s;
+  if(pct===100){e='&#x1F3C6;';t='Perfecte! Ets una crack!';s='Has encertat totes les preguntes!';}
+  else if(pct>=80){e='&#x1F31F;';t='Molt be!';s='Quasi perfecte, segueix practicant!';}
+  else if(pct>=60){e='&#x1F4AA;';t='Bon esfors!';s='Vas per bon cami. Repassa les que has fallat!';}
+  else if(pct>=40){e='&#x1F4DA;';t='Cal estudiar mes!';s='No et preocupis, torna-ho a intentar!';}
+  else{e='&#x1F605;';t='Hem de repassar!';s='Llegeix el tema i torna-ho a provar.';}
+  document.getElementById('remoji').innerHTML=e;
+  document.getElementById('rtitle').textContent=t;
+  document.getElementById('rsub').textContent=s;
+  document.getElementById('cnum').textContent=score;
+  document.getElementById('cden').textContent='de '+total;
+  var wl=document.getElementById('wlist');
+  if(wrong.length>0){
+    var h='<div class="wrongs"><h3>Preguntes que has fallat</h3>';
+    for(var i=0;i<wrong.length;i++){
+      h+='<div class="wi"><div class="wq">'+wrong[i].q+'</div><div class="wa">'+wrong[i].a+'</div></div>';
+    }
+    h+='</div>';
+    wl.innerHTML=h;
+  } else wl.innerHTML='';
+  document.getElementById('retrybtn').onclick=function(){ startQuiz(DATA.indexOf(cquiz)); };
+}
+
+function shuffle(a){
+  for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}
+  return a;
+}
+</script>
+</body>
+</html>
