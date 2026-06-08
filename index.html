@@ -6,270 +6,88 @@
 <title>Repàs 3r Trimestre 🧬</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
-
   :root {
-    --bg: #f0f4ff;
-    --card: #ffffff;
-    --primary: #6c63ff;
-    --primary-dark: #5a52d5;
-    --accent: #ff6584;
-    --green: #2ec4b6;
-    --yellow: #ffd166;
-    --red: #ef476f;
-    --text: #2d2d2d;
-    --muted: #7a7a9d;
-    --radius: 16px;
-    --shadow: 0 4px 24px rgba(108,99,255,0.10);
+    --bg: #f0f4ff; --card: #ffffff; --primary: #6c63ff;
+    --green: #2ec4b6; --red: #ef476f; --muted: #7a7a9d;
+    --radius: 16px; --shadow: 0 4px 24px rgba(108,99,255,0.10);
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: #2d2d2d; min-height: 100vh; }
 
-  body {
-    font-family: 'Nunito', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-  }
+  header { background: linear-gradient(135deg, #6c63ff 0%, #a78bfa 100%); color: white; padding: 32px 24px 24px; text-align: center; }
+  header h1 { font-size: 2rem; font-weight: 900; }
+  header p  { margin-top: 6px; font-size: 1rem; opacity: .88; }
 
-  /* ── HEADER ── */
-  header {
-    background: linear-gradient(135deg, var(--primary) 0%, #a78bfa 100%);
-    color: white;
-    padding: 32px 24px 24px;
-    text-align: center;
-  }
-  header h1 { font-size: 2rem; font-weight: 900; letter-spacing: -0.5px; }
-  header p  { margin-top: 6px; font-size: 1rem; opacity: 0.88; }
-
-  /* ── HOME ── */
-  #home {
-    max-width: 640px;
-    margin: 40px auto;
-    padding: 0 20px;
-  }
-  .quiz-list { display: flex; flex-direction: column; gap: 16px; }
-
+  #home { max-width: 600px; margin: 40px auto; padding: 0 20px; }
   .quiz-card {
-    background: var(--card);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 22px 26px;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    cursor: pointer;
-    transition: transform .15s, box-shadow .15s;
-    border: 2px solid transparent;
+    background: white; border-radius: var(--radius); box-shadow: var(--shadow);
+    padding: 22px 26px; display: flex; align-items: center; gap: 18px;
+    cursor: pointer; transition: transform .15s, box-shadow .15s; border: 2px solid transparent;
+    margin-bottom: 16px;
   }
-  .quiz-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 32px rgba(108,99,255,0.18);
-    border-color: var(--primary);
-  }
-  .quiz-icon {
-    font-size: 2.2rem;
-    width: 56px; height: 56px;
-    background: var(--bg);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
+  .quiz-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(108,99,255,.18); border-color: #6c63ff; }
+  .quiz-icon { font-size: 2rem; width: 52px; height: 52px; background: var(--bg); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .quiz-info h2 { font-size: 1.05rem; font-weight: 800; }
-  .quiz-info p  { font-size: 0.85rem; color: var(--muted); margin-top: 3px; }
-  .quiz-arrow   { margin-left: auto; font-size: 1.4rem; color: var(--primary); }
-
-  .soon {
-    opacity: .5; cursor: not-allowed;
-  }
+  .quiz-info p  { font-size: .85rem; color: var(--muted); margin-top: 3px; }
+  .quiz-arrow { margin-left: auto; font-size: 1.4rem; color: #6c63ff; }
+  .soon { opacity: .45; cursor: not-allowed; }
   .soon:hover { transform: none; box-shadow: var(--shadow); border-color: transparent; }
 
-  /* ── QUIZ SCREEN ── */
-  #quiz-screen { display: none; max-width: 700px; margin: 0 auto; padding: 30px 20px 60px; }
+  #quiz-screen { display: none; max-width: 680px; margin: 0 auto; padding: 28px 20px 60px; }
+  .quiz-header { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+  .back-btn { background: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; box-shadow: var(--shadow); display: flex; align-items: center; justify-content: center; }
+  .back-btn:hover { background: #6c63ff; color: white; }
+  .quiz-title { font-size: 1.15rem; font-weight: 800; }
 
-  .quiz-header {
-    display: flex; align-items: center; gap: 14px;
-    margin-bottom: 28px;
-  }
-  .back-btn {
-    background: white; border: none; border-radius: 50%;
-    width: 40px; height: 40px; cursor: pointer;
-    font-size: 1.2rem; box-shadow: var(--shadow);
-    display: flex; align-items: center; justify-content: center;
-    transition: background .15s;
-  }
-  .back-btn:hover { background: var(--primary); color: white; }
+  .progress-wrap { margin-bottom: 24px; }
+  .progress-info { display: flex; justify-content: space-between; font-size: .82rem; color: var(--muted); margin-bottom: 6px; }
+  .progress-bar { height: 8px; background: #e0e0f0; border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #6c63ff, #a78bfa); border-radius: 99px; transition: width .4s ease; }
 
-  .quiz-title { font-size: 1.2rem; font-weight: 800; }
-
-  /* progress */
-  .progress-wrap { margin-bottom: 28px; }
-  .progress-info {
-    display: flex; justify-content: space-between;
-    font-size: 0.82rem; color: var(--muted); margin-bottom: 6px;
-  }
-  .progress-bar {
-    height: 8px; background: #e0e0f0; border-radius: 99px; overflow: hidden;
-  }
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--primary), #a78bfa);
-    border-radius: 99px;
-    transition: width .4s ease;
-  }
-
-  /* question card */
-  .question-card {
-    background: var(--card);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 28px 28px 24px;
-    margin-bottom: 20px;
-  }
-  .q-label {
-    font-size: 0.75rem; font-weight: 700;
-    color: var(--primary); text-transform: uppercase;
-    letter-spacing: 1px; margin-bottom: 10px;
-  }
+  .question-card { background: white; border-radius: var(--radius); box-shadow: var(--shadow); padding: 24px; margin-bottom: 16px; }
+  .q-label { font-size: .75rem; font-weight: 700; color: #6c63ff; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
   .q-text { font-size: 1.05rem; font-weight: 700; line-height: 1.5; }
 
-  /* options */
-  .options { display: flex; flex-direction: column; gap: 12px; }
+  .options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
   .option-btn {
-    background: var(--bg);
-    border: 2px solid #e0e0f0;
-    border-radius: 12px;
-    padding: 14px 18px;
-    text-align: left;
-    cursor: pointer;
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.97rem;
-    font-weight: 600;
-    display: flex; align-items: flex-start; gap: 12px;
-    transition: border-color .15s, background .15s, transform .1s;
-    line-height: 1.45;
+    background: var(--bg); border: 2px solid #e0e0f0; border-radius: 12px;
+    padding: 13px 16px; text-align: left; cursor: pointer;
+    font-family: 'Nunito', sans-serif; font-size: .95rem; font-weight: 600;
+    display: flex; align-items: flex-start; gap: 10px; transition: all .15s; line-height: 1.4;
   }
-  .option-btn:hover:not(:disabled) {
-    border-color: var(--primary);
-    background: #f0edff;
-    transform: translateX(4px);
-  }
-  .option-letter {
-    font-weight: 800;
-    color: var(--primary);
-    min-width: 20px;
-  }
-  .option-btn.correct {
-    background: #d4f7f0; border-color: var(--green); color: #1a6e67;
-  }
+  .option-btn:hover:not(:disabled) { border-color: #6c63ff; background: #f0edff; transform: translateX(3px); }
+  .option-letter { font-weight: 900; color: #6c63ff; min-width: 18px; }
+  .option-btn.correct { background: #d4f7f0; border-color: var(--green); color: #1a6e67; }
   .option-btn.correct .option-letter { color: var(--green); }
-  .option-btn.wrong {
-    background: #ffe0e8; border-color: var(--red); color: #8b0029;
-  }
+  .option-btn.wrong { background: #ffe0e8; border-color: var(--red); color: #8b0029; }
   .option-btn.wrong .option-letter { color: var(--red); }
   .option-btn:disabled { cursor: not-allowed; }
 
-  /* feedback */
-  .feedback-box {
-    border-radius: 12px;
-    padding: 14px 18px;
-    font-size: 0.95rem;
-    font-weight: 700;
-    display: none;
-    margin-bottom: 16px;
-    line-height: 1.5;
-  }
+  .feedback-box { border-radius: 12px; padding: 13px 16px; font-size: .93rem; font-weight: 700; display: none; margin-bottom: 14px; line-height: 1.5; }
   .feedback-box.show { display: block; }
-  .feedback-box.ok  { background: #d4f7f0; color: #1a6e67; border-left: 4px solid var(--green); }
-  .feedback-box.ko  { background: #ffe0e8; color: #8b0029; border-left: 4px solid var(--red); }
+  .feedback-box.ok { background: #d4f7f0; color: #1a6e67; border-left: 4px solid var(--green); }
+  .feedback-box.ko { background: #ffe0e8; color: #8b0029; border-left: 4px solid var(--red); }
 
-  /* next btn */
-  .next-btn {
-    display: none;
-    width: 100%;
-    padding: 15px;
-    background: linear-gradient(135deg, var(--primary), #a78bfa);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 1rem;
-    font-weight: 800;
-    cursor: pointer;
-    transition: opacity .15s, transform .1s;
-  }
+  .next-btn { display: none; width: 100%; padding: 14px; background: linear-gradient(135deg,#6c63ff,#a78bfa); color: white; border: none; border-radius: 12px; font-family: 'Nunito',sans-serif; font-size: 1rem; font-weight: 800; cursor: pointer; }
   .next-btn.show { display: block; }
-  .next-btn:hover { opacity: 0.92; transform: scale(1.01); }
+  .next-btn:hover { opacity: .9; }
 
-  /* loading */
-  .loading-box {
-    background: var(--card);
-    border-radius: var(--radius);
-    padding: 40px;
-    text-align: center;
-    box-shadow: var(--shadow);
-  }
-  .spinner {
-    width: 44px; height: 44px;
-    border: 4px solid #e0e0f0;
-    border-top-color: var(--primary);
-    border-radius: 50%;
-    animation: spin .7s linear infinite;
-    margin: 0 auto 16px;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .loading-text { color: var(--muted); font-weight: 700; }
-
-  /* results */
-  #results-screen { display: none; max-width: 600px; margin: 0 auto; padding: 40px 20px; text-align: center; }
-  .result-emoji { font-size: 5rem; margin-bottom: 16px; }
-  .result-title { font-size: 1.8rem; font-weight: 900; margin-bottom: 8px; }
-  .result-sub   { color: var(--muted); font-size: 1rem; margin-bottom: 28px; }
-  .score-circle {
-    width: 140px; height: 140px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary), #a78bfa);
-    color: white;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    margin: 0 auto 32px;
-    box-shadow: 0 8px 32px rgba(108,99,255,0.25);
-  }
-  .score-num  { font-size: 2.8rem; font-weight: 900; line-height: 1; }
-  .score-denom{ font-size: 1rem; opacity: .85; }
-
+  #results-screen { display: none; max-width: 580px; margin: 0 auto; padding: 40px 20px; text-align: center; }
+  .result-emoji { font-size: 5rem; margin-bottom: 14px; }
+  .result-title { font-size: 1.7rem; font-weight: 900; margin-bottom: 6px; }
+  .result-sub   { color: var(--muted); font-size: 1rem; margin-bottom: 26px; }
+  .score-circle { width: 130px; height: 130px; border-radius: 50%; background: linear-gradient(135deg,#6c63ff,#a78bfa); color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 28px; box-shadow: 0 8px 32px rgba(108,99,255,.25); }
+  .score-num   { font-size: 2.6rem; font-weight: 900; line-height: 1; }
+  .score-denom { font-size: 1rem; opacity: .85; }
   .result-btns { display: flex; flex-direction: column; gap: 12px; }
-  .btn-primary, .btn-secondary {
-    padding: 14px 24px;
-    border-radius: 12px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 1rem; font-weight: 800;
-    cursor: pointer; border: none;
-    transition: opacity .15s, transform .1s;
-  }
-  .btn-primary  { background: linear-gradient(135deg,var(--primary),#a78bfa); color: white; }
-  .btn-secondary{ background: white; color: var(--primary); border: 2px solid var(--primary); }
-  .btn-primary:hover, .btn-secondary:hover { opacity: .88; transform: scale(1.01); }
-
-  /* wrong answers summary */
-  .wrong-summary {
-    background: var(--card);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 22px;
-    text-align: left;
-    margin-bottom: 24px;
-  }
-  .wrong-summary h3 { font-size: 1rem; font-weight: 800; margin-bottom: 14px; color: var(--primary); }
-  .wrong-item { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid #f0f0f0; }
+  .btn-primary  { padding: 14px; border-radius: 12px; font-family: 'Nunito',sans-serif; font-size: 1rem; font-weight: 800; cursor: pointer; border: none; background: linear-gradient(135deg,#6c63ff,#a78bfa); color: white; }
+  .btn-secondary{ padding: 14px; border-radius: 12px; font-family: 'Nunito',sans-serif; font-size: 1rem; font-weight: 800; cursor: pointer; background: white; color: #6c63ff; border: 2px solid #6c63ff; }
+  .wrong-summary { background: white; border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px; text-align: left; margin-bottom: 22px; }
+  .wrong-summary h3 { font-size: .95rem; font-weight: 800; margin-bottom: 12px; color: #6c63ff; }
+  .wrong-item { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #f0f0f0; }
   .wrong-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
-  .wrong-item .wq { font-weight: 700; font-size: .9rem; margin-bottom: 4px; }
-  .wrong-item .wa { font-size: .85rem; color: #1a6e67; background: #d4f7f0; padding: 6px 10px; border-radius: 8px; }
-
-  @media (max-width: 480px) {
-    header h1 { font-size: 1.5rem; }
-    .question-card { padding: 20px 18px; }
-    .q-text { font-size: .97rem; }
-  }
+  .wrong-item .wq { font-weight: 700; font-size: .88rem; margin-bottom: 4px; }
+  .wrong-item .wa { font-size: .83rem; color: #1a6e67; background: #d4f7f0; padding: 5px 10px; border-radius: 8px; }
 </style>
 </head>
 <body>
@@ -279,354 +97,264 @@
   <p>Biologia i Geologia · 1r ESO</p>
 </header>
 
-<!-- HOME -->
 <div id="home">
-  <div class="quiz-list">
-    <div class="quiz-card" onclick="startQuiz(0)">
-      <div class="quiz-icon">🦠</div>
-      <div class="quiz-info">
-        <h2>Qüestionari 1 · Els virus</h2>
-        <p>33 preguntes · Unitat 5</p>
-      </div>
-      <div class="quiz-arrow">→</div>
-    </div>
-    <div class="quiz-card soon">
-      <div class="quiz-icon">🔬</div>
-      <div class="quiz-info">
-        <h2>Qüestionari 2</h2>
-        <p>Pròximament...</p>
-      </div>
-      <div class="quiz-arrow">🔒</div>
-    </div>
-    <div class="quiz-card soon">
-      <div class="quiz-icon">🧫</div>
-      <div class="quiz-info">
-        <h2>Qüestionari 3</h2>
-        <p>Pròximament...</p>
-      </div>
-      <div class="quiz-arrow">🔒</div>
-    </div>
-    <div class="quiz-card soon">
-      <div class="quiz-icon">🌿</div>
-      <div class="quiz-info">
-        <h2>Qüestionari 4</h2>
-        <p>Pròximament...</p>
-      </div>
-      <div class="quiz-arrow">🔒</div>
-    </div>
-    <div class="quiz-card soon">
-      <div class="quiz-icon">🧪</div>
-      <div class="quiz-info">
-        <h2>Qüestionari 5</h2>
-        <p>Pròximament...</p>
-      </div>
-      <div class="quiz-arrow">🔒</div>
-    </div>
+  <div class="quiz-card" onclick="startQuiz(0)">
+    <div class="quiz-icon">🦠</div>
+    <div class="quiz-info"><h2>Qüestionari 1 · Els virus</h2><p>33 preguntes · Unitat 5</p></div>
+    <div class="quiz-arrow">→</div>
   </div>
+  <div class="quiz-card soon"><div class="quiz-icon">🔬</div><div class="quiz-info"><h2>Qüestionari 2</h2><p>Pròximament...</p></div><div class="quiz-arrow">🔒</div></div>
+  <div class="quiz-card soon"><div class="quiz-icon">🧫</div><div class="quiz-info"><h2>Qüestionari 3</h2><p>Pròximament...</p></div><div class="quiz-arrow">🔒</div></div>
+  <div class="quiz-card soon"><div class="quiz-icon">🌿</div><div class="quiz-info"><h2>Qüestionari 4</h2><p>Pròximament...</p></div><div class="quiz-arrow">🔒</div></div>
+  <div class="quiz-card soon"><div class="quiz-icon">🧪</div><div class="quiz-info"><h2>Qüestionari 5</h2><p>Pròximament...</p></div><div class="quiz-arrow">🔒</div></div>
 </div>
 
-<!-- QUIZ SCREEN -->
 <div id="quiz-screen">
   <div class="quiz-header">
     <button class="back-btn" onclick="goHome()">←</button>
     <span class="quiz-title" id="quiz-title-label"></span>
   </div>
   <div class="progress-wrap">
-    <div class="progress-info">
-      <span id="prog-text">Pregunta 1 de 33</span>
-      <span id="prog-pct">0%</span>
-    </div>
+    <div class="progress-info"><span id="prog-text"></span><span id="prog-pct"></span></div>
     <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
   </div>
   <div id="question-area"></div>
 </div>
 
-<!-- RESULTS SCREEN -->
 <div id="results-screen">
   <div class="result-emoji" id="result-emoji"></div>
   <div class="result-title" id="result-title"></div>
-  <div class="result-sub" id="result-sub"></div>
+  <div class="result-sub"   id="result-sub"></div>
   <div class="score-circle">
-    <span class="score-num" id="score-num"></span>
+    <span class="score-num"   id="score-num"></span>
     <span class="score-denom" id="score-denom"></span>
   </div>
   <div id="wrong-list"></div>
   <div class="result-btns">
-    <button class="btn-primary" id="retry-btn">🔄 Torna-ho a intentar</button>
+    <button class="btn-primary"   id="retry-btn">🔄 Torna-ho a intentar</button>
     <button class="btn-secondary" onclick="goHome()">🏠 Torna a l'inici</button>
   </div>
 </div>
 
 <script>
-// ─── DATA ───────────────────────────────────────────────────────────────────
-const QUIZZES = [
-  {
-    title: "🦠 Els virus",
-    questions: [
-      { q: "Què són els virus?", a: "Són éssers acel·lulars (no tenen cèl·lules)." },
-      { q: "Per què es consideren paràsits estrictes?", a: "Perquè necessiten infectar una cèl·lula per fer còpies de si mateixos." },
-      { q: "Els virus són éssers vius?", a: "No es consideren éssers vius complets, perquè no tenen cèl·lules ni poden fer les funcions vitals per si mateixos." },
-      { q: "Per què no s'inclouen en cap regne?", a: "Perquè no compleixen les característiques dels éssers vius (estar format per cèl·lules i poder fer les 3 funcions vitals: nutrició, relació i reproducció)." },
-      { q: "Per què no es poden observar amb un microscopi òptic?", a: "Perquè són molt petits i cal un microscopi electrònic, que proporciona més augments." },
-      { q: "De què està format el genoma d'un virus?", a: "De material genètic (àcids nucleics)." },
-      { q: "Quines parts tenen tots els virus?", a: "Tots els virus presenten genoma (material genètic) i càpside (coberta proteica)." },
-      { q: "Quina funció té el genoma del virus?", a: "Conté tota la informació necessària per produir nous virus." },
-      { q: "Quina funció té la càpside?", a: "És una coberta proteica que protegeix el material genètic del virus." },
-      { q: "Quina funció té l'embolcall? La presenten tots els virus?", a: "L'embolcall ajuda el virus a introduir-se dins la cèl·lula. No tots els virus el tenen, només alguns." },
-      { q: "Quin tipus de virus parasiten cèl·lules animals?", a: "Els virus animals." },
-      { q: "Quin tipus de virus infecten bacteris?", a: "Els virus bacterians o fags." },
-      { q: "Quines semblances hi ha entre virus animals i virus bacterians?", a: "Tots dos presenten càpside i genoma, i tots dos són paràsits estrictes." },
-      { q: "Quines diferències hi ha entre virus animals i virus bacterians?", a: "Els virus animals parasiten cèl·lules d'animals i presenten embolcall, mentre que els bacterians parasiten bacteris i presenten coll, cua, fibres de la cua i placa basal." },
-      { q: "Quin és el primer pas quan un virus infecta una cèl·lula?", a: "El virus reconeix la cèl·lula i hi introdueix el seu material genètic." },
-      { q: "Què passa amb el material genètic del virus dins la cèl·lula?", a: "Utilitza la maquinària de la cèl·lula per fabricar nous virus." },
-      { q: "Què passa al final del procés d'infecció?", a: "La cèl·lula es trenca (lisi) i allibera nous virus." },
-      { q: "Quin és l'ordre correcte del cicle d'un virus?", a: "1. El virus reconeix el bacteri. 2. El genoma s'introdueix dins la cèl·lula. 3. El genoma utilitza la maquinària cel·lular. 4. Acumulació de partícules víriques. 5. La cèl·lula es trenca i surten els nous virus." },
-      { q: "Com s'anomena el procés en què es trenca la cèl·lula infectada per alliberar nous virus?", a: "Cicle lític." },
-      { q: "Què és el cicle lisogènic?", a: "Té lloc quan el virus s'integra al material genètic de la cèl·lula i es manté un temps sense destruir-la." },
-      { q: "Què poden provocar els virus?", a: "Malalties en diferents éssers vius." },
-      { q: "Els virus només afecten els humans?", a: "No, també afecten animals, plantes i bacteris." },
-      { q: "Quin problema econòmic poden causar els virus?", a: "Grans pèrdues econòmiques, per exemple en agricultura o ramaderia." },
-      { q: "Com es combaten les infeccions víriques?", a: "Amb antivirals." },
-      { q: "Es poden utilitzar antibiòtics per curar infeccions víriques?", a: "No, perquè els antibiòtics només funcionen contra bacteris." },
-      { q: "Quin virus causa la grip?", a: "El virus de la grip." },
-      { q: "Quin virus causa la sida?", a: "El VIH (virus de la immunodeficiència humana)." },
-      { q: "Quin virus afecta el sistema immunològic i provoca immunodeficiència?", a: "El VIH." },
-      { q: "Quin virus pot provocar febre, pèrdua del gust i dificultat per respirar?", a: "El virus de la COVID-19." },
-      { q: "Quin virus pot provocar una fallada general dels òrgans del cos?", a: "L'Ebola." },
-      { q: "Per què els virus necessiten una cèl·lula per reproduir-se?", a: "Perquè no tenen la maquinària pròpia per fer-ho." },
-      { q: "Quina diferència hi ha entre virus i bacteris?", a: "Els virus no tenen cèl·lules, mentre que els bacteris sí que són éssers vius cel·lulars." },
-      { q: "Per què els virus poden ser difícils de combatre?", a: "Perquè es reprodueixen dins les cèl·lules i poden mutar." }
-    ]
-  }
-];
+const QUIZZES = [{
+  title: "🦠 Els virus",
+  questions: [
+    { q: "Què són els virus?",
+      a: "Són éssers acel·lulars (no tenen cèl·lules).",
+      w: ["Són éssers unicel·lulars molt petits.", "Són bacteris sense membrana nuclear."] },
+    { q: "Per què es consideren paràsits estrictes?",
+      a: "Perquè necessiten infectar una cèl·lula per fer còpies de si mateixos.",
+      w: ["Perquè només viuen en ambients aquàtics.", "Perquè s'alimenten de nutrients del sòl."] },
+    { q: "Els virus són éssers vius?",
+      a: "No es consideren éssers vius complets, perquè no tenen cèl·lules ni poden fer les funcions vitals per si mateixos.",
+      w: ["Sí, perquè es poden reproduir.", "Sí, perquè tenen material genètic propi."] },
+    { q: "Per què no s'inclouen en cap regne?",
+      a: "Perquè no compleixen les característiques dels éssers vius (estar format per cèl·lules i poder fer les 3 funcions vitals: nutrició, relació i reproducció).",
+      w: ["Perquè són massa petits per classificar-los.", "Perquè pertanyen al regne dels protoctists."] },
+    { q: "Per què no es poden observar amb un microscopi òptic?",
+      a: "Perquè són molt petits i cal un microscopi electrònic, que proporciona més augments.",
+      w: ["Perquè són transparents i no reflecteixen la llum.", "Perquè es mouen massa ràpid per poder-los veure."] },
+    { q: "De què està format el genoma d'un virus?",
+      a: "De material genètic (àcids nucleics).",
+      w: ["De lípids i proteïnes estructurals.", "De glucosa i aminoàcids."] },
+    { q: "Quines parts tenen tots els virus?",
+      a: "Tots els virus presenten genoma (material genètic) i càpside (coberta proteica).",
+      w: ["Membrana cel·lular, citoplasma i nucli.", "Embolcall lipídic, ribosomes i vacuoles."] },
+    { q: "Quina funció té el genoma del virus?",
+      a: "Conté tota la informació necessària per produir nous virus.",
+      w: ["Protegeix el virus de les temperatures extremes.", "Ajuda el virus a moure's dins l'organisme."] },
+    { q: "Quina funció té la càpside?",
+      a: "És una coberta proteica que protegeix el material genètic del virus.",
+      w: ["Permet al virus obtenir energia per reproduir-se.", "Conté els enzims necessaris per infectar la cèl·lula."] },
+    { q: "Quina funció té l'embolcall? La presenten tots els virus?",
+      a: "L'embolcall ajuda el virus a introduir-se dins la cèl·lula. No tots els virus el tenen, només alguns.",
+      w: ["L'embolcall emmagatzema energia. Tots els virus el tenen.", "L'embolcall protegeix el genoma. Només el tenen els fags."] },
+    { q: "Quin tipus de virus parasiten cèl·lules animals?",
+      a: "Els virus animals.",
+      w: ["Els bacteriòfags.", "Els virus vegetals."] },
+    { q: "Quin tipus de virus infecten bacteris?",
+      a: "Els virus bacterians o fags.",
+      w: ["Els virus animals.", "Els retrovirus."] },
+    { q: "Quines semblances hi ha entre virus animals i virus bacterians?",
+      a: "Tots dos presenten càpside i genoma, i tots dos són paràsits estrictes.",
+      w: ["Tots dos presenten embolcall lipídic i cua.", "Tots dos infecten cèl·lules animals i vegetals."] },
+    { q: "Quines diferències hi ha entre virus animals i virus bacterians?",
+      a: "Els virus animals parasiten cèl·lules d'animals i presenten embolcall, mentre que els bacterians parasiten bacteris i presenten coll, cua, fibres de la cua i placa basal.",
+      w: ["Els virus animals tenen cua i els bacterians no en tenen.", "Els virus bacterians són més grans i tenen embolcall."] },
+    { q: "Quin és el primer pas quan un virus infecta una cèl·lula?",
+      a: "El virus reconeix la cèl·lula i hi introdueix el seu material genètic.",
+      w: ["El virus destrueix la membrana de la cèl·lula immediatament.", "El virus espera que la cèl·lula es divideixi per entrar-hi."] },
+    { q: "Què passa amb el material genètic del virus dins la cèl·lula?",
+      a: "Utilitza la maquinària de la cèl·lula per fabricar nous virus.",
+      w: ["Es destrueix per les defenses de la cèl·lula.", "S'integra al nucli sense causar cap canvi."] },
+    { q: "Què passa al final del procés d'infecció?",
+      a: "La cèl·lula es trenca (lisi) i allibera nous virus.",
+      w: ["La cèl·lula es recupera i elimina el virus.", "El virus surt de la cèl·lula sense destruir-la."] },
+    { q: "Quin és l'ordre correcte del cicle d'un virus?",
+      a: "1. El virus reconeix el bacteri. 2. El genoma s'introdueix dins la cèl·lula. 3. El genoma utilitza la maquinària cel·lular. 4. Acumulació de partícules víriques. 5. La cèl·lula es trenca i surten els nous virus.",
+      w: ["1. Lisi cel·lular. 2. Introducció del genoma. 3. Reconeixement. 4. Fabricació. 5. Acumulació.", "1. Acumulació. 2. Reconeixement. 3. Lisi. 4. Introducció del genoma. 5. Fabricació."] },
+    { q: "Com s'anomena el procés en què es trenca la cèl·lula infectada per alliberar nous virus?",
+      a: "Cicle lític.",
+      w: ["Cicle lisogènic.", "Cicle metabòlic."] },
+    { q: "Què és el cicle lisogènic?",
+      a: "Té lloc quan el virus s'integra al material genètic de la cèl·lula i es manté un temps sense destruir-la.",
+      w: ["És el procés pel qual el virus destrueix la cèl·lula immediatament.", "És quan el virus es reprodueix fora de la cèl·lula."] },
+    { q: "Què poden provocar els virus?",
+      a: "Malalties en diferents éssers vius.",
+      w: ["Només reaccions al·lèrgiques en humans.", "Únicament infeccions en animals vertebrats."] },
+    { q: "Els virus només afecten els humans?",
+      a: "No, també afecten animals, plantes i bacteris.",
+      w: ["Sí, els virus estan especialitzats en cèl·lules humanes.", "No, però només afecten animals i humans."] },
+    { q: "Quin problema econòmic poden causar els virus?",
+      a: "Grans pèrdues econòmiques, per exemple en agricultura o ramaderia.",
+      w: ["Augment del cost dels medicaments antibiòtics.", "Problemes en la indústria química i farmacèutica."] },
+    { q: "Com es combaten les infeccions víriques?",
+      a: "Amb antivirals.",
+      w: ["Amb antibiòtics.", "Amb antiinflamatoris i analgèsics."] },
+    { q: "Es poden utilitzar antibiòtics per curar infeccions víriques?",
+      a: "No, perquè els antibiòtics només funcionen contra bacteris.",
+      w: ["Sí, els antibiòtics eliminen qualsevol tipus d'infecció.", "Sí, però només per als virus més senzills."] },
+    { q: "Quin virus causa la grip?",
+      a: "El virus de la grip.",
+      w: ["El VIH.", "El virus del refredat comú (rinovirus)."] },
+    { q: "Quin virus causa la sida?",
+      a: "El VIH (virus de la immunodeficiència humana).",
+      w: ["El virus de l'Ebola.", "El virus de l'hepatitis B."] },
+    { q: "Quin virus afecta el sistema immunològic i provoca immunodeficiència?",
+      a: "El VIH.",
+      w: ["El virus de la grip.", "El virus de la COVID-19."] },
+    { q: "Quin virus pot provocar febre, pèrdua del gust i dificultat per respirar?",
+      a: "El virus de la COVID-19.",
+      w: ["El virus de la grip estacional.", "El VIH."] },
+    { q: "Quin virus pot provocar una fallada general dels òrgans del cos?",
+      a: "L'Ebola.",
+      w: ["El virus de la grip.", "El VIH."] },
+    { q: "Per què els virus necessiten una cèl·lula per reproduir-se?",
+      a: "Perquè no tenen la maquinària pròpia per fer-ho.",
+      w: ["Perquè necessiten nutrients que només hi ha dins les cèl·lules.", "Perquè la temperatura dins la cèl·lula és la ideal per als virus."] },
+    { q: "Quina diferència hi ha entre virus i bacteris?",
+      a: "Els virus no tenen cèl·lules, mentre que els bacteris sí que són éssers vius cel·lulars.",
+      w: ["Els bacteris no es poden reproduir sols, els virus sí.", "Els virus tenen nucli definit, els bacteris no."] },
+    { q: "Per què els antibiòtics no funcionen contra els virus?",
+      a: "Perquè els virus no són bacteris i tenen un funcionament diferent.",
+      w: ["Perquè els virus destrueixen els antibiòtics ràpidament.", "Perquè els antibiòtics només funcionen en malalties cròniques."] },
+    { q: "Per què els virus poden ser difícils de combatre?",
+      a: "Perquè es reprodueixen dins les cèl·lules i poden mutar.",
+      w: ["Perquè viuen fora de les cèl·lules i són difícils de localitzar.", "Perquè produeixen toxines que destrueixen els medicaments."] }
+  ]
+}];
 
-// ─── STATE ──────────────────────────────────────────────────────────────────
-let currentQuiz = null;
-let questions   = [];
-let qIndex      = 0;
-let score       = 0;
-let wrongItems  = [];
-let shuffledQ   = [];
-let answered    = false;
+let currentQuiz=null, questions=[], qIndex=0, score=0, wrongItems=[], shuffledQ=[], answered=false;
 
-// ─── NAVIGATION ─────────────────────────────────────────────────────────────
-function goHome() {
-  document.getElementById('home').style.display = '';
-  document.getElementById('quiz-screen').style.display = 'none';
-  document.getElementById('results-screen').style.display = 'none';
+function goHome(){
+  document.getElementById('home').style.display='';
+  document.getElementById('quiz-screen').style.display='none';
+  document.getElementById('results-screen').style.display='none';
 }
 
-function startQuiz(idx) {
-  currentQuiz = QUIZZES[idx];
-  questions   = shuffle([...currentQuiz.questions]);
-  qIndex      = 0;
-  score       = 0;
-  wrongItems  = [];
-
-  document.getElementById('home').style.display = 'none';
-  document.getElementById('results-screen').style.display = 'none';
-  document.getElementById('quiz-screen').style.display = '';
-  document.getElementById('quiz-title-label').textContent = currentQuiz.title;
-
+function startQuiz(idx){
+  currentQuiz=QUIZZES[idx];
+  questions=shuffle([...currentQuiz.questions]);
+  qIndex=0; score=0; wrongItems=[];
+  document.getElementById('home').style.display='none';
+  document.getElementById('results-screen').style.display='none';
+  document.getElementById('quiz-screen').style.display='';
+  document.getElementById('quiz-title-label').textContent=currentQuiz.title;
   loadQuestion();
 }
 
-// ─── QUESTION ────────────────────────────────────────────────────────────────
-function loadQuestion() {
-  answered = false;
-  const total = questions.length;
-  const pct   = Math.round((qIndex / total) * 100);
+function loadQuestion(){
+  answered=false;
+  const total=questions.length;
+  const pct=Math.round((qIndex/total)*100);
+  document.getElementById('prog-text').textContent=`Pregunta ${qIndex+1} de ${total}`;
+  document.getElementById('prog-pct').textContent=pct+'%';
+  document.getElementById('progress-fill').style.width=pct+'%';
 
-  document.getElementById('prog-text').textContent = `Pregunta ${qIndex + 1} de ${total}`;
-  document.getElementById('prog-pct').textContent  = pct + '%';
-  document.getElementById('progress-fill').style.width = pct + '%';
-
-  const area = document.getElementById('question-area');
-  area.innerHTML = `
-    <div class="loading-box">
-      <div class="spinner"></div>
-      <div class="loading-text">Generant les opcions…</div>
-    </div>`;
-
-  generateOptions(questions[qIndex]);
-}
-
-async function generateOptions(item) {
-  let options;
-  try {
-    options = await fetchOptions(item.q, item.a);
-  } catch(e) {
-    // fallback: placeholder wrong answers
-    options = [
-      "Perquè tenen moltes cèl·lules pròpies.",
-      "Perquè viuen fora de qualsevol organisme.",
-      "Perquè es reprodueixen de forma independent."
-    ];
-    // still shuffle correctly below
+  const item=questions[qIndex];
+  const letters=['A','B','C'];
+  const correctPos=Math.floor(Math.random()*3);
+  shuffledQ=[];
+  let wi=0;
+  for(let i=0;i<3;i++){
+    if(i===correctPos) shuffledQ.push({text:item.a,correct:true});
+    else shuffledQ.push({text:item.w[wi++],correct:false});
   }
 
-  // Build 3 options: 1 correct + 2 wrong (options = array of 2 wrong)
-  const letters = ['A', 'B', 'C'];
-  const correctPos = Math.floor(Math.random() * 3);
-  const wrongs = options.slice(0, 2);
-
-  shuffledQ = [];
-  let wi = 0;
-  for (let i = 0; i < 3; i++) {
-    if (i === correctPos) {
-      shuffledQ.push({ text: item.a, correct: true });
-    } else {
-      shuffledQ.push({ text: wrongs[wi++], correct: false });
-    }
-  }
-
-  renderQuestion(item, shuffledQ, letters);
-}
-
-function renderQuestion(item, opts, letters) {
-  const area = document.getElementById('question-area');
-  const qNum = qIndex + 1;
-
-  const optHtml = opts.map((o, i) => `
+  const opts=shuffledQ.map((o,i)=>`
     <button class="option-btn" onclick="selectOption(${i})" id="opt-${i}">
       <span class="option-letter">${letters[i]}</span>
       <span>${o.text}</span>
     </button>`).join('');
 
-  area.innerHTML = `
+  document.getElementById('question-area').innerHTML=`
     <div class="question-card">
-      <div class="q-label">Pregunta ${qNum}</div>
+      <div class="q-label">Pregunta ${qIndex+1}</div>
       <div class="q-text">${item.q}</div>
     </div>
-    <div class="options">${optHtml}</div>
+    <div class="options">${opts}</div>
     <div class="feedback-box" id="feedback"></div>
     <button class="next-btn" id="next-btn" onclick="nextQuestion()">
-      ${qIndex + 1 < questions.length ? 'Següent pregunta →' : 'Veure resultats 🏆'}
+      ${qIndex+1<questions.length?'Següent pregunta →':'Veure resultats 🏆'}
     </button>`;
 }
 
-function selectOption(i) {
-  if (answered) return;
-  answered = true;
-
-  const chosen  = shuffledQ[i];
-  const correct = shuffledQ.findIndex(o => o.correct);
-  const fb      = document.getElementById('feedback');
-  const nextBtn = document.getElementById('next-btn');
-
-  // Style all buttons
-  shuffledQ.forEach((o, idx) => {
-    const btn = document.getElementById(`opt-${idx}`);
-    btn.disabled = true;
-    if (o.correct)      btn.classList.add('correct');
-    else if (idx === i) btn.classList.add('wrong');
+function selectOption(i){
+  if(answered) return;
+  answered=true;
+  const chosen=shuffledQ[i];
+  const fb=document.getElementById('feedback');
+  shuffledQ.forEach((o,idx)=>{
+    const btn=document.getElementById(`opt-${idx}`);
+    btn.disabled=true;
+    if(o.correct) btn.classList.add('correct');
+    else if(idx===i) btn.classList.add('wrong');
   });
-
-  if (chosen.correct) {
+  if(chosen.correct){
     score++;
-    fb.className = 'feedback-box ok show';
-    fb.textContent = randomPraise();
+    fb.className='feedback-box ok show';
+    fb.textContent=['✅ Correcte! Molt bé! 🎉','✅ Exacte! Ets una crack! ⭐','✅ Perfecte! Segueix així! 💪'][Math.floor(Math.random()*3)];
   } else {
-    wrongItems.push({ q: questions[qIndex].q, a: questions[qIndex].a });
-    fb.className = 'feedback-box ko show';
-    fb.textContent = `❌ Resposta incorrecta. La correcta era: "${questions[qIndex].a}"`;
+    wrongItems.push({q:questions[qIndex].q, a:questions[qIndex].a});
+    fb.className='feedback-box ko show';
+    fb.textContent=`❌ Incorrecte. La resposta correcta era: "${questions[qIndex].a}"`;
   }
-
-  nextBtn.classList.add('show');
+  document.getElementById('next-btn').classList.add('show');
 }
 
-function nextQuestion() {
+function nextQuestion(){
   qIndex++;
-  if (qIndex >= questions.length) {
-    showResults();
-  } else {
-    loadQuestion();
-  }
+  if(qIndex>=questions.length) showResults();
+  else loadQuestion();
 }
 
-// ─── RESULTS ─────────────────────────────────────────────────────────────────
-function showResults() {
-  document.getElementById('quiz-screen').style.display = 'none';
-  const rs = document.getElementById('results-screen');
-  rs.style.display = '';
-
-  const total = questions.length;
-  const pct   = Math.round((score / total) * 100);
-
-  let emoji, title, sub;
-  if (pct === 100) { emoji = '🏆'; title = 'Perfecte! Ets una crack!'; sub = 'Has encertat totes les preguntes. Increïble!'; }
-  else if (pct >= 80) { emoji = '🌟'; title = 'Molt bé!'; sub = 'Quasi perfecte, segueix practicant una mica més!'; }
-  else if (pct >= 60) { emoji = '💪'; title = 'Bon esforç!'; sub = 'Vas per bon camí. Repassa les que has fallat!'; }
-  else if (pct >= 40) { emoji = '📚'; title = 'Cal estudiar més!'; sub = 'No et preocupis, torna-ho a intentar!'; }
-  else { emoji = '😅'; title = 'Hem de repassar!'; sub = 'Torna a llegir el tema i torna-ho a provar.'; }
-
-  document.getElementById('result-emoji').textContent = emoji;
-  document.getElementById('result-title').textContent = title;
-  document.getElementById('result-sub').textContent   = sub;
-  document.getElementById('score-num').textContent    = score;
-  document.getElementById('score-denom').textContent  = `de ${total}`;
-
-  // Wrong answers summary
-  const wl = document.getElementById('wrong-list');
-  if (wrongItems.length > 0) {
-    wl.innerHTML = `<div class="wrong-summary">
-      <h3>📋 Preguntes que has fallat</h3>
-      ${wrongItems.map(w => `
-        <div class="wrong-item">
-          <div class="wq">🔸 ${w.q}</div>
-          <div class="wa">✅ ${w.a}</div>
-        </div>`).join('')}
-    </div>`;
-  } else {
-    wl.innerHTML = '';
-  }
-
-  document.getElementById('retry-btn').onclick = () => startQuiz(QUIZZES.indexOf(currentQuiz));
+function showResults(){
+  document.getElementById('quiz-screen').style.display='none';
+  document.getElementById('results-screen').style.display='';
+  const total=questions.length, pct=Math.round((score/total)*100);
+  let emoji,title,sub;
+  if(pct===100){emoji='🏆';title='Perfecte! Ets una crack!';sub='Has encertat totes les preguntes!';}
+  else if(pct>=80){emoji='🌟';title='Molt bé!';sub='Quasi perfecte, segueix practicant!';}
+  else if(pct>=60){emoji='💪';title='Bon esforç!';sub='Vas per bon camí. Repassa les que has fallat!';}
+  else if(pct>=40){emoji='📚';title='Cal estudiar més!';sub='No et preocupis, torna-ho a intentar!';}
+  else{emoji='😅';title='Hem de repassar!';sub='Llegeix el tema i torna-ho a provar.';}
+  document.getElementById('result-emoji').textContent=emoji;
+  document.getElementById('result-title').textContent=title;
+  document.getElementById('result-sub').textContent=sub;
+  document.getElementById('score-num').textContent=score;
+  document.getElementById('score-denom').textContent=`de ${total}`;
+  const wl=document.getElementById('wrong-list');
+  if(wrongItems.length>0){
+    wl.innerHTML=`<div class="wrong-summary"><h3>📋 Preguntes que has fallat</h3>${wrongItems.map(w=>`<div class="wrong-item"><div class="wq">🔸 ${w.q}</div><div class="wa">✅ ${w.a}</div></div>`).join('')}</div>`;
+  } else wl.innerHTML='';
+  document.getElementById('retry-btn').onclick=()=>startQuiz(QUIZZES.indexOf(currentQuiz));
 }
 
-// ─── ANTHROPIC API ───────────────────────────────────────────────────────────
-async function fetchOptions(question, correctAnswer) {
-  const prompt = `Ets un professor de Biologia de 1r d'ESO. Per a la pregunta de test següent, inventa exactament 2 respostes incorrectes però creïbles (no massa difícils) en català. 
-  
-Pregunta: "${question}"
-Resposta correcta: "${correctAnswer}"
-
-Respon ÚNICAMENT amb un JSON vàlid sense cap text addicional, ni backticks, ni markdown, en aquest format exacte:
-{"wrong1": "primera resposta incorrecta", "wrong2": "segona resposta incorrecta"}`;
-
-  const response = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 1000,
-      messages: [{ role: "user", content: prompt }]
-    })
-  });
-
-  const data = await response.json();
-  const text = data.content.map(c => c.text || '').join('').trim();
-  const parsed = JSON.parse(text);
-  return [parsed.wrong1, parsed.wrong2];
-}
-
-// ─── HELPERS ─────────────────────────────────────────────────────────────────
-function shuffle(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
+function shuffle(arr){
+  for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
   return arr;
 }
-
-const PRAISES = [
-  "✅ Correcte! Molt bé! 🎉",
-  "✅ Exacte! Ets una crack! ⭐",
-  "✅ Perfecte! Segueix així! 💪",
-  "✅ Molt bé! Ho tens controlat! 🌟",
-  "✅ Correcte! Continua així! 🚀"
-];
-function randomPraise() { return PRAISES[Math.floor(Math.random() * PRAISES.length)]; }
 </script>
 </body>
 </html>
